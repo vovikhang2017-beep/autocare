@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: autocare
+    runtime: node
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 24.21.0
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SQLITE_DATABASE_PATH
+        value: /var/data/autocare.sqlite
+    disk:
+      name: autocare-data
+      mountPath: /var/data
+      sizeGB: 1
